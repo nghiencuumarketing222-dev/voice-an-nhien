@@ -1,0 +1,144 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  border-bottom: 1px solid transparent;
+}
+
+.nav-compact {
+  border-bottom-color: var(--line);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.5rem;
+  padding-block: 0.35rem;
+}
+
+.brand {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.brand-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brand-mark {
+  width: 1.45rem;
+  height: 1.45rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 30%, #fff 0 18%, transparent 19%),
+    linear-gradient(135deg, #c084fc, #9b5cff 50%, #6d5efc);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 8%, transparent);
+  animation: pulse-soft 3.6s ease-in-out infinite;
+}
+
+.brand-name {
+  font-family: var(--font);
+  font-size: 0.98rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.brand-sub {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-left: 2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--accent-deep);
+  transition: opacity 160ms ease;
+}
+
+.brand-sub:hover {
+  opacity: 0.8;
+}
+
+.brand-sub-phone {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: none;
+  gap: 1.25rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.nav-links a {
+  transition: color 160ms ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--ink);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.icon-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+}
+
+.nav-cta {
+  padding-inline: 1.1rem;
+}
+
+.nav-call {
+  display: none;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .nav-call {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 820px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-cta {
+    padding-inline: 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .brand-name {
+    font-size: 0.9rem;
+  }
+
+  .brand-sub {
+    font-size: 0.66rem;
+    margin-left: 1.85rem;
+  }
+}

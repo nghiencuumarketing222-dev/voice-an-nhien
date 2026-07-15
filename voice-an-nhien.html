@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice An Nhiên — Đọc văn bản thành podcast</title>
+  <meta name="description" content="Voice An Nhiên — đọc văn bản thành podcast tiếng Việt. Học video 1-1 086 7979 881" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Literata:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f2fb;
+      --panel: rgba(255, 255, 255, 0.86);
+      --ink: #1a1228;
+      --soft: #5a4d70;
+      --muted: #8a7ea0;
+      --line: rgba(26, 18, 40, 0.1);
+      --accent: #9b5cff;
+      --accent-deep: #7a3ff0;
+      --accent-ink: #fff;
+      --shadow: 0 20px 50px rgba(90, 40, 160, 0.12);
+      --radius: 18px;
+      --font: "Be Vietnam Pro", "Segoe UI", sans-serif;
+      --display: "Literata", "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(42% 38% at 12% 18%, rgba(155, 92, 255, 0.28), transparent 70%),
+        radial-gradient(36% 34% at 88% 12%, rgba(210, 90, 220, 0.18), transparent 72%),
+        radial-gradient(40% 40% at 70% 78%, rgba(110, 140, 255, 0.16), transparent 70%),
+        var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1100px, calc(100% - 2rem)); margin: 0 auto; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 1rem 0; flex-wrap: wrap;
+    }
+    .brand { display: grid; gap: 0.15rem; }
+    .brand-top { display: flex; align-items: center; gap: 0.55rem; font-weight: 700; }
+    .dot {
+      width: 1.35rem; height: 1.35rem; border-radius: 999px;
+      background: linear-gradient(135deg, #c084fc, #9b5cff 50%, #6d5efc);
+    }
+    .brand-sub { font-size: 0.78rem; font-weight: 600; color: var(--accent-deep); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      border: 0; border-radius: 999px; padding: 0.75rem 1.15rem;
+      font: inherit; font-weight: 600; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 10px 28px rgba(155, 92, 255, 0.32); }
+    .btn-ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hero { text-align: center; padding: 2rem 0 1.5rem; }
+    .hero h1 {
+      margin: 0; font-family: var(--display); font-size: clamp(2.2rem, 7vw, 4.2rem);
+      line-height: 1.1; letter-spacing: -0.03em;
+    }
+    .pill {
+      display: inline-flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: center;
+      margin-top: 0.85rem; padding: 0.55rem 1rem; border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+      font-weight: 600;
+    }
+    .pill span:first-child { color: var(--accent-deep); }
+    .hero p { max-width: 34rem; margin: 1rem auto 0; color: var(--soft); }
+    .grid {
+      display: grid; gap: 1rem; padding-bottom: 2.5rem;
+    }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: 1.4fr 0.9fr; align-items: start; }
+    }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 1rem; backdrop-filter: blur(10px);
+    }
+    .top { display: flex; justify-content: space-between; gap: 0.75rem; align-items: center; margin-bottom: 0.75rem; font-weight: 600; }
+    .meta { color: var(--muted); font-size: 0.88rem; font-weight: 500; }
+    textarea {
+      width: 100%; min-height: 280px; resize: vertical; border: 1px solid var(--line);
+      border-radius: 14px; padding: 1rem; font: inherit; line-height: 1.7;
+      background: color-mix(in srgb, var(--bg) 70%, #fff); color: var(--ink); outline: none;
+    }
+    textarea:focus { border-color: color-mix(in srgb, var(--accent) 70%, var(--line)); box-shadow: 0 0 0 3px rgba(155, 92, 255, 0.2); }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end; margin-top: 0.85rem; }
+    .side { display: grid; gap: 1rem; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+    .tab {
+      border: 1px solid var(--line); border-radius: 999px; background: transparent;
+      padding: 0.35rem 0.75rem; font: inherit; font-size: 0.85rem; font-weight: 600; color: var(--soft); cursor: pointer;
+    }
+    .tab.active { background: color-mix(in srgb, var(--accent) 28%, transparent); border-color: color-mix(in srgb, var(--accent) 70%, var(--line)); color: var(--ink); }
+    .voices { display: grid; gap: 0.4rem; max-height: 280px; overflow: auto; }
+    .voice {
+      text-align: left; border: 1px solid transparent; border-radius: 12px; background: transparent;
+      padding: 0.7rem 0.8rem; cursor: pointer; font: inherit;
+    }
+    .voice:hover { background: color-mix(in srgb, var(--bg) 80%, #fff); }
+    .voice.active { border-color: color-mix(in srgb, var(--accent) 70%, var(--line)); background: color-mix(in srgb, var(--accent) 16%, transparent); }
+    .voice b { display: block; }
+    .voice small { color: var(--muted); }
+    .badge {
+      display: inline-block; margin-left: 0.35rem; font-size: 0.68rem; font-weight: 700;
+      padding: 0.12rem 0.4rem; border-radius: 999px; background: var(--accent); color: #fff; vertical-align: middle;
+    }
+    label.slider { display: grid; gap: 0.4rem; margin-top: 0.7rem; color: var(--soft); font-size: 0.92rem; }
+    input[type="range"] { width: 100%; accent-color: var(--accent-deep); }
+    .status {
+      display: inline-flex; border-radius: 999px; padding: 0.4rem 0.85rem;
+      border: 1px solid var(--line); background: var(--panel); font-weight: 600; font-size: 0.9rem;
+    }
+    .status.busy { border-color: color-mix(in srgb, var(--accent) 65%, var(--line)); background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .notice { margin: 0.75rem 0; padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid var(--line); color: var(--soft); background: var(--panel); }
+    .notice.err { color: #d6455d; border-color: rgba(214, 69, 93, 0.35); }
+    footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2rem; color: var(--soft); font-size: 0.95rem; }
+    footer a { color: var(--accent-deep); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="brand-top"><span class="dot"></span><span>Voice An Nhiên</span></div>
+        <a class="brand-sub" href="tel:0867979881">Học video 1-1 · 086 7979 881</a>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <a class="btn btn-ghost" href="tel:0867979881">Gọi ngay</a>
+        <a class="btn btn-primary" href="#studio">Mở xưởng đọc</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>Voice An Nhiên</h1>
+      <a class="pill" href="tel:0867979881">
+        <span>Học video 1-1</span>
+        <span>086 7979 881</span>
+      </a>
+      <p>Đọc văn bản thành podcast tiếng Việt — chọn giọng, chỉnh tốc độ, nghe và tải MP3.</p>
+    </section>
+
+    <section id="studio" class="grid">
+      <div class="panel">
+        <div class="top">
+          <label for="script">Nội dung / script</label>
+          <span class="meta" id="count">0 từ · 0 ký tự</span>
+        </div>
+        <textarea id="script" placeholder="Dán script podcast tiếng Việt vào đây…">Chào mừng bạn đến với tập podcast hôm nay.
+
+Trong tập này, chúng ta sẽ nói về cách biến một đoạn văn bản tiếng Việt thành giọng đọc tự nhiên.
+
+Bạn chỉ cần dán nội dung, chọn giọng Podcast, rồi nhấn Phát.</textarea>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btnClear">Xóa</button>
+          <button type="button" class="btn btn-ghost" id="btnSample">Mẫu</button>
+          <button type="button" class="btn btn-ghost" id="btnStop">Dừng</button>
+          <a class="btn btn-ghost" id="btnDownload" hidden download="voice-an-nhien-podcast.mp3">Tải MP3</a>
+          <button type="button" class="btn btn-primary" id="btnPlay">Phát</button>
+        </div>
+        <p class="notice" id="msg" hidden></p>
+      </div>
+
+      <aside class="side">
+        <div class="panel">
+          <div class="top">
+            <span>Giọng đọc</span>
+            <span class="status" id="status">Sẵn sàng</span>
+          </div>
+          <div class="tabs" id="tabs">
+            <button type="button" class="tab active" data-cat="podcast">Podcast</button>
+            <button type="button" class="tab" data-cat="thuong">Giọng thường</button>
+          </div>
+          <div class="voices" id="voices"></div>
+        </div>
+        <div class="panel">
+          <div class="top"><span>Điều chỉnh</span></div>
+          <label class="slider">Tốc độ · <span id="rateVal">0.90</span>x
+            <input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.9" />
+          </label>
+          <p class="meta" style="margin-top:.75rem">File HTML độc lập dùng TTS tiếng Việt qua Google (miễn phí). Mỗi lần tối đa ~200 ký tự/đoạn, app tự cắt script dài.</p>
+        </div>
+        <div class="panel">
+          <div class="top"><span>Liên hệ</span></div>
+          <p style="margin:0;color:var(--soft)">Học video 1-1</p>
+          <p style="margin:.25rem 0 0;font-family:var(--display);font-size:1.6rem;font-weight:700;color:var(--accent-deep)">
+            <a href="tel:0867979881">086 7979 881</a>
+          </p>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Voice An Nhiên · <a href="tel:0867979881">Học video 1-1 086 7979 881</a></div>
+    </footer>
+  </div>
+
+  <script>
+    const SAMPLE = document.getElementById("script").value;
+    const voicesData = [
+      { id: "podcast-nu", name: "Podcast Nữ", cat: "podcast", tl: "vi", rate: 0.9, note: "Ấm, nhịp podcast" },
+      { id: "podcast-nam", name: "Podcast Nam", cat: "podcast", tl: "vi", rate: 0.92, note: "Trầm, dễ nghe dài" },
+      { id: "podcast-ke", name: "Podcast Kể chuyện", cat: "podcast", tl: "vi", rate: 0.85, note: "Chậm, kể chuyện" },
+      { id: "podcast-tin", name: "Podcast Tin tức", cat: "podcast", tl: "vi", rate: 1.05, note: "Nhanh, rõ chữ" },
+      { id: "vi-chuan", name: "Giọng Việt chuẩn", cat: "thuong", tl: "vi", rate: 1, note: "Thông dụng" }
+    ];
+
+    let currentCat = "podcast";
+    let voiceId = "podcast-nu";
+    let audio = null;
+    let objectUrl = null;
+
+    const $ = (id) => document.getElementById(id);
+    const scriptEl = $("script");
+    const voicesEl = $("voices");
+    const statusEl = $("status");
+    const msgEl = $("msg");
+    const rateEl = $("rate");
+    const rateVal = $("rateVal");
+    const btnDownload = $("btnDownload");
+
+    $("year").textContent = new Date().getFullYear();
+
+    function selectedVoice() {
+      return voicesData.find((v) => v.id === voiceId) || voicesData[0];
+    }
+
+    function updateCount() {
+      const t = scriptEl.value;
+      const chars = t.length;
+      const words = t.trim() ? t.trim().split(/\s+/).length : 0;
+      $("count").textContent = words + " từ · " + chars + " ký tự";
+    }
+
+    function setStatus(text, busy) {
+      statusEl.textContent = text;
+      statusEl.classList.toggle("busy", !!busy);
+    }
+
+    function showMsg(text, isErr) {
+      if (!text) { msgEl.hidden = true; return; }
+      msgEl.hidden = false;
+      msgEl.textContent = text;
+      msgEl.className = "notice" + (isErr ? " err" : "");
+    }
+
+    function renderVoices() {
+      const list = voicesData.filter((v) => v.cat === currentCat);
+      voicesEl.innerHTML = list.map((v) => `
+        <button type="button" class="voice ${v.id === voiceId ? "active" : ""}" data-id="${v.id}">
+          <b>${v.name}${v.cat === "podcast" ? '<span class="badge">Podcast</span>' : ""}</b>
+          <small>${v.note}</small>
+        </button>
+      `).join("");
+    }
+
+    function chunkText(text, maxLen) {
+      const parts = [];
+      let rest = text.trim().replace(/\s+/g, " ");
+      while (rest.length > maxLen) {
+        let cut = rest.lastIndexOf(" ", maxLen);
+        if (cut < maxLen * 0.5) cut = maxLen;
+        parts.push(rest.slice(0, cut).trim());
+        rest = rest.slice(cut).trim();
+      }
+      if (rest) parts.push(rest);
+      return parts;
+    }
+
+    function ttsUrl(text, tl) {
+      return "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=" +
+        encodeURIComponent(tl) + "&q=" + encodeURIComponent(text);
+    }
+
+    async function fetchMp3(text, tl) {
+      const chunks = chunkText(text, 180);
+      const buffers = [];
+      for (const part of chunks) {
+        const res = await fetch(ttsUrl(part, tl));
+        if (!res.ok) throw new Error("Không tạo được giọng (HTTP " + res.status + "). Thử lại hoặc mở bằng trình duyệt thường.");
+        buffers.push(await res.arrayBuffer());
+      }
+      const total = buffers.reduce((n, b) => n + b.byteLength, 0);
+      const out = new Uint8Array(total);
+      let offset = 0;
+      for (const b of buffers) {
+        out.set(new Uint8Array(b), offset);
+        offset += b.byteLength;
+      }
+      return new Blob([out], { type: "audio/mpeg" });
+    }
+
+    function stopAudio() {
+      if (audio) {
+        audio.pause();
+        audio.src = "";
+        audio = null;
+      }
+      setStatus("Sẵn sàng", false);
+    }
+
+    async function play() {
+      const text = scriptEl.value.trim();
+      if (!text) { showMsg("Hãy nhập nội dung cần đọc.", true); return; }
+      showMsg("");
+      stopAudio();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      setStatus("Đang tạo giọng…", true);
+      $("btnPlay").disabled = true;
+      try {
+        const voice = selectedVoice();
+        const blob = await fetchMp3(text, voice.tl);
+        objectUrl = URL.createObjectURL(blob);
+        btnDownload.hidden = false;
+        btnDownload.href = objectUrl;
+        audio = new Audio(objectUrl);
+        audio.playbackRate = Number(rateEl.value);
+        audio.onended = () => setStatus("Sẵn sàng", false);
+        audio.onerror = () => { setStatus("Sẵn sàng", false); showMsg("Không phát được audio.", true); };
+        setStatus("Đang đọc", true);
+        await audio.play();
+      } catch (err) {
+        setStatus("Sẵn sàng", false);
+        showMsg(err.message || "Có lỗi xảy ra.", true);
+      } finally {
+        $("btnPlay").disabled = false;
+      }
+    }
+
+    document.getElementById("tabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".tab");
+      if (!btn) return;
+      currentCat = btn.dataset.cat;
+      [...document.querySelectorAll(".tab")].forEach((t) => t.classList.toggle("active", t === btn));
+      const first = voicesData.find((v) => v.cat === currentCat);
+      if (first) {
+        voiceId = first.id;
+        rateEl.value = first.rate;
+        rateVal.textContent = Number(first.rate).toFixed(2);
+      }
+      renderVoices();
+    });
+
+    voicesEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".voice");
+      if (!btn) return;
+      voiceId = btn.dataset.id;
+      const v = selectedVoice();
+      rateEl.value = v.rate;
+      rateVal.textContent = Number(v.rate).toFixed(2);
+      renderVoices();
+    });
+
+    rateEl.addEventListener("input", () => {
+      rateVal.textContent = Number(rateEl.value).toFixed(2);
+      if (audio) audio.playbackRate = Number(rateEl.value);
+    });
+
+    scriptEl.addEventListener("input", updateCount);
+    $("btnClear").onclick = () => { scriptEl.value = ""; updateCount(); };
+    $("btnSample").onclick = () => { scriptEl.value = SAMPLE; updateCount(); };
+    $("btnStop").onclick = stopAudio;
+    $("btnPlay").onclick = play;
+
+    renderVoices();
+    updateCount();
+  </script>
+</body>
+</html>

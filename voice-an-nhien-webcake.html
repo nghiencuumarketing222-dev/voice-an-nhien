@@ -1,0 +1,468 @@
+<!--
+  Voice An Nhiên — dán TOÀN BỘ vào Webcake:
+  Editors → Others → HTML → Edit HTML → Xóa hết code mặc định → Paste → Save
+  KHÔNG dán vào nhiều section; chỉ dùng 1 ô HTML.
+-->
+<style>
+  .van-root {
+    --bg: #f6f2fb;
+    --panel: #ffffff;
+    --ink: #1a1228;
+    --soft: #5a4d70;
+    --muted: #8a7ea0;
+    --line: rgba(26, 18, 40, 0.1);
+    --accent: #9b5cff;
+    --accent-deep: #7a3ff0;
+    --accent-ink: #fff;
+    --shadow: 0 16px 40px rgba(90, 40, 160, 0.12);
+    --radius: 16px;
+    --font: "Be Vietnam Pro", "Segoe UI", Tahoma, sans-serif;
+    --display: Georgia, "Times New Roman", serif;
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 1100px;
+    padding: 12px 16px 28px;
+    font-family: var(--font);
+    color: var(--ink);
+    line-height: 1.6;
+    background:
+      radial-gradient(42% 38% at 12% 18%, rgba(155, 92, 255, 0.22), transparent 70%),
+      radial-gradient(36% 34% at 88% 12%, rgba(210, 90, 220, 0.14), transparent 72%),
+      var(--bg);
+    border-radius: 18px;
+  }
+  .van-root *, .van-root *::before, .van-root *::after { box-sizing: border-box; }
+  .van-root a { color: inherit; text-decoration: none; }
+  .van-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap; padding: 8px 0 16px;
+  }
+  .van-brand { display: grid; gap: 2px; }
+  .van-brand-top { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
+  .van-dot {
+    width: 18px; height: 18px; border-radius: 999px; flex-shrink: 0;
+    background: linear-gradient(135deg, #c084fc, #9b5cff 50%, #6d5efc);
+  }
+  .van-sub { font-size: 12px; font-weight: 600; color: var(--accent-deep); }
+  .van-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .van-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 0; border-radius: 999px; padding: 10px 16px;
+    font: inherit; font-weight: 600; cursor: pointer;
+  }
+  .van-btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .van-btn-ghost { background: #fff; border: 1px solid var(--line); color: var(--ink); }
+  .van-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+  .van-hero { text-align: center; padding: 8px 0 18px; }
+  .van-hero h1 {
+    margin: 0; font-family: var(--display); font-size: clamp(28px, 7vw, 48px);
+    line-height: 1.15; letter-spacing: -0.02em;
+  }
+  .van-pill {
+    display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center;
+    margin-top: 12px; padding: 8px 14px; border-radius: 999px;
+    background: rgba(155, 92, 255, 0.14);
+    border: 1px solid rgba(155, 92, 255, 0.35);
+    font-weight: 600; font-size: 14px;
+  }
+  .van-pill span:first-child { color: var(--accent-deep); }
+  .van-hero p { max-width: 520px; margin: 12px auto 0; color: var(--soft); font-size: 15px; }
+  .van-grid { display: grid; gap: 12px; }
+  @media (min-width: 900px) {
+    .van-grid { grid-template-columns: 1.4fr 0.9fr; align-items: start; }
+  }
+  .van-panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 14px;
+  }
+  .van-top {
+    display: flex; justify-content: space-between; gap: 10px; align-items: center;
+    margin-bottom: 10px; font-weight: 600; font-size: 14px;
+  }
+  .van-meta { color: var(--muted); font-size: 13px; font-weight: 500; }
+  .van-root textarea {
+    width: 100%; min-height: 240px; resize: vertical; border: 1px solid var(--line);
+    border-radius: 12px; padding: 12px; font: inherit; line-height: 1.7;
+    background: #faf7ff; color: var(--ink); outline: none;
+  }
+  .van-bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 10px; }
+  .van-side { display: grid; gap: 12px; }
+  .van-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .van-tab {
+    border: 1px solid var(--line); border-radius: 999px; background: #fff;
+    padding: 6px 12px; font: inherit; font-size: 13px; font-weight: 600; color: var(--soft); cursor: pointer;
+  }
+  .van-tab.is-on {
+    background: rgba(155, 92, 255, 0.2);
+    border-color: rgba(155, 92, 255, 0.55);
+    color: var(--ink);
+  }
+  .van-voices { display: grid; gap: 6px; max-height: 260px; overflow: auto; }
+  .van-voice {
+    text-align: left; border: 1px solid transparent; border-radius: 12px; background: #fff;
+    padding: 10px 12px; cursor: pointer; font: inherit; width: 100%;
+  }
+  .van-voice.is-on {
+    border-color: rgba(155, 92, 255, 0.55);
+    background: rgba(155, 92, 255, 0.12);
+  }
+  .van-voice b { display: block; font-size: 14px; }
+  .van-voice small { color: var(--muted); font-size: 12px; }
+  .van-badge {
+    display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700;
+    padding: 2px 6px; border-radius: 999px; background: var(--accent); color: #fff; vertical-align: middle;
+  }
+  .van-slider { display: grid; gap: 6px; margin-top: 8px; color: var(--soft); font-size: 13px; }
+  .van-root input[type="range"] { width: 100%; accent-color: var(--accent-deep); }
+  .van-status {
+    display: inline-flex; border-radius: 999px; padding: 4px 10px;
+    border: 1px solid var(--line); background: #fff; font-weight: 600; font-size: 12px;
+  }
+  .van-status.is-busy {
+    border-color: rgba(155, 92, 255, 0.55);
+    background: rgba(155, 92, 255, 0.16);
+  }
+  .van-msg {
+    margin: 10px 0 0; padding: 10px 12px; border-radius: 10px;
+    border: 1px solid var(--line); color: var(--soft); background: #fff; font-size: 13px;
+  }
+  .van-msg.is-err { color: #d6455d; border-color: rgba(214, 69, 93, 0.35); }
+  .van-foot {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+    color: var(--soft); font-size: 13px; text-align: center;
+  }
+  .van-foot a { color: var(--accent-deep); font-weight: 600; }
+</style>
+
+<div class="van-root" id="vanApp">
+  <div class="van-head">
+    <div class="van-brand">
+      <div class="van-brand-top"><span class="van-dot"></span><span>Voice An Nhiên</span></div>
+      <a class="van-sub" href="tel:0867979881">Học video 1-1 · 086 7979 881</a>
+    </div>
+    <div class="van-actions">
+      <a class="van-btn van-btn-ghost" href="tel:0867979881">Gọi ngay</a>
+    </div>
+  </div>
+
+  <div class="van-hero">
+    <h1>Voice An Nhiên</h1>
+    <a class="van-pill" href="tel:0867979881">
+      <span>Học video 1-1</span>
+      <span>086 7979 881</span>
+    </a>
+    <p>Đọc văn bản thành podcast tiếng Việt — chọn giọng, chỉnh tốc độ, nghe và tải MP3.</p>
+  </div>
+
+  <div class="van-grid">
+    <div class="van-panel">
+      <div class="van-top">
+        <label for="vanScript">Nội dung / script</label>
+        <span class="van-meta" id="vanCount">0 từ · 0 ký tự</span>
+      </div>
+      <textarea id="vanScript" placeholder="Dán script podcast tiếng Việt vào đây…">Chào mừng bạn đến với tập podcast hôm nay.
+
+Trong tập này, chúng ta sẽ nói về cách biến một đoạn văn bản tiếng Việt thành giọng đọc tự nhiên.
+
+Bạn chỉ cần dán nội dung, chọn giọng Podcast, rồi nhấn Phát.</textarea>
+      <div class="van-bar">
+        <button type="button" class="van-btn van-btn-ghost" id="vanClear">Xóa</button>
+        <button type="button" class="van-btn van-btn-ghost" id="vanSample">Mẫu</button>
+        <button type="button" class="van-btn van-btn-ghost" id="vanStop">Dừng</button>
+        <a class="van-btn van-btn-ghost" id="vanDownload" style="display:none" download="voice-an-nhien-podcast.mp3">Tải MP3</a>
+        <button type="button" class="van-btn van-btn-primary" id="vanPlay">Phát</button>
+      </div>
+      <p class="van-msg" id="vanMsg" style="display:none"></p>
+    </div>
+
+    <div class="van-side">
+      <div class="van-panel">
+        <div class="van-top">
+          <span>Giọng đọc</span>
+          <span class="van-status" id="vanStatus">Sẵn sàng</span>
+        </div>
+        <div class="van-tabs" id="vanTabs">
+          <button type="button" class="van-tab is-on" data-cat="podcast">Podcast</button>
+          <button type="button" class="van-tab" data-cat="thuong">Giọng thường</button>
+        </div>
+        <div class="van-voices" id="vanVoices"></div>
+      </div>
+      <div class="van-panel">
+        <div class="van-top"><span>Điều chỉnh</span></div>
+        <label class="van-slider">Tốc độ · <span id="vanRateVal">0.90</span>x
+          <input type="range" id="vanRate" min="0.5" max="1.5" step="0.05" value="0.9" />
+        </label>
+      </div>
+      <div class="van-panel">
+        <div class="van-top"><span>Liên hệ</span></div>
+        <p style="margin:0;color:var(--soft);font-size:14px">Học video 1-1</p>
+        <p style="margin:4px 0 0;font-size:24px;font-weight:700;color:var(--accent-deep)">
+          <a href="tel:0867979881">086 7979 881</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="van-foot">
+    © <span id="vanYear"></span> Voice An Nhiên ·
+    <a href="tel:0867979881">Học video 1-1 086 7979 881</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById("vanApp");
+  if (!root || root.getAttribute("data-ready") === "1") return;
+  root.setAttribute("data-ready", "1");
+
+  var SAMPLE = document.getElementById("vanScript").value;
+  var voicesData = [
+    { id: "podcast-nu", name: "Podcast Nữ", cat: "podcast", tl: "vi", rate: 0.9, note: "Ấm, nhịp podcast" },
+    { id: "podcast-nam", name: "Podcast Nam", cat: "podcast", tl: "vi", rate: 0.92, note: "Trầm, dễ nghe dài" },
+    { id: "podcast-ke", name: "Podcast Kể chuyện", cat: "podcast", tl: "vi", rate: 0.85, note: "Chậm, kể chuyện" },
+    { id: "podcast-tin", name: "Podcast Tin tức", cat: "podcast", tl: "vi", rate: 1.05, note: "Nhanh, rõ chữ" },
+    { id: "vi-chuan", name: "Giọng Việt chuẩn", cat: "thuong", tl: "vi", rate: 1, note: "Thông dụng" }
+  ];
+
+  var currentCat = "podcast";
+  var voiceId = "podcast-nu";
+  var audio = null;
+  var objectUrl = null;
+  var playToken = 0;
+  var isPlaying = false;
+
+  var scriptEl = document.getElementById("vanScript");
+  var voicesEl = document.getElementById("vanVoices");
+  var statusEl = document.getElementById("vanStatus");
+  var msgEl = document.getElementById("vanMsg");
+  var rateEl = document.getElementById("vanRate");
+  var rateVal = document.getElementById("vanRateVal");
+  var btnDownload = document.getElementById("vanDownload");
+
+  document.getElementById("vanYear").textContent = String(new Date().getFullYear());
+
+  function selectedVoice() {
+    for (var i = 0; i < voicesData.length; i++) {
+      if (voicesData[i].id === voiceId) return voicesData[i];
+    }
+    return voicesData[0];
+  }
+
+  function updateCount() {
+    var t = scriptEl.value;
+    var chars = t.length;
+    var words = t.trim() ? t.trim().split(/\s+/).length : 0;
+    document.getElementById("vanCount").textContent = words + " từ · " + chars + " ký tự";
+  }
+
+  function setStatus(text, busy) {
+    statusEl.textContent = text;
+    if (busy) statusEl.classList.add("is-busy");
+    else statusEl.classList.remove("is-busy");
+  }
+
+  function showMsg(text, isErr) {
+    if (!text) {
+      msgEl.style.display = "none";
+      return;
+    }
+    msgEl.style.display = "block";
+    msgEl.textContent = text;
+    msgEl.className = "van-msg" + (isErr ? " is-err" : "");
+  }
+
+  function renderVoices() {
+    var html = "";
+    for (var i = 0; i < voicesData.length; i++) {
+      var v = voicesData[i];
+      if (v.cat !== currentCat) continue;
+      html +=
+        '<button type="button" class="van-voice' + (v.id === voiceId ? " is-on" : "") + '" data-id="' + v.id + '">' +
+        "<b>" + v.name + (v.cat === "podcast" ? '<span class="van-badge">Podcast</span>' : "") + "</b>" +
+        "<small>" + v.note + "</small></button>";
+    }
+    voicesEl.innerHTML = html;
+  }
+
+  function chunkText(text, maxLen) {
+    var parts = [];
+    var rest = text.trim().replace(/\s+/g, " ");
+    while (rest.length > maxLen) {
+      var cut = rest.lastIndexOf(" ", maxLen);
+      if (cut < maxLen * 0.5) cut = maxLen;
+      parts.push(rest.slice(0, cut).trim());
+      rest = rest.slice(cut).trim();
+    }
+    if (rest) parts.push(rest);
+    return parts;
+  }
+
+  function ttsUrl(text, tl) {
+    return (
+      "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=" +
+      encodeURIComponent(tl) +
+      "&q=" +
+      encodeURIComponent(text)
+    );
+  }
+
+  function fetchMp3(text, tl) {
+    var chunks = chunkText(text, 180);
+    var chain = Promise.resolve([]);
+    chunks.forEach(function (part) {
+      chain = chain.then(function (buffers) {
+        return fetch(ttsUrl(part, tl)).then(function (res) {
+          if (!res.ok) throw new Error("Không tạo được giọng. Thử lại sau.");
+          return res.arrayBuffer().then(function (buf) {
+            buffers.push(buf);
+            return buffers;
+          });
+        });
+      });
+    });
+    return chain.then(function (buffers) {
+      var total = 0;
+      for (var i = 0; i < buffers.length; i++) total += buffers[i].byteLength;
+      var out = new Uint8Array(total);
+      var offset = 0;
+      for (var j = 0; j < buffers.length; j++) {
+        out.set(new Uint8Array(buffers[j]), offset);
+        offset += buffers[j].byteLength;
+      }
+      return new Blob([out], { type: "audio/mpeg" });
+    });
+  }
+
+  function stopAudio() {
+    playToken += 1;
+    isPlaying = false;
+    if (audio) {
+      try {
+        audio.onended = null;
+        audio.onerror = null;
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+      } catch (e) {}
+      audio = null;
+    }
+    setStatus("Sẵn sàng", false);
+  }
+
+  function play() {
+    var text = scriptEl.value.trim();
+    if (!text) {
+      showMsg("Hãy nhập nội dung cần đọc.", true);
+      return;
+    }
+    showMsg("", false);
+    if (audio) {
+      try {
+        audio.onended = null;
+        audio.onerror = null;
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+      } catch (e) {}
+      audio = null;
+    }
+    var token = ++playToken;
+    isPlaying = true;
+    if (objectUrl) {
+      URL.revokeObjectURL(objectUrl);
+      objectUrl = null;
+    }
+    setStatus("Đang tạo giọng…", true);
+    document.getElementById("vanPlay").disabled = true;
+    var voice = selectedVoice();
+    fetchMp3(text, voice.tl)
+      .then(function (blob) {
+        if (token !== playToken) return;
+        objectUrl = URL.createObjectURL(blob);
+        btnDownload.style.display = "inline-flex";
+        btnDownload.href = objectUrl;
+        audio = new Audio(objectUrl);
+        audio.playbackRate = Number(rateEl.value);
+        audio.onended = function () {
+          if (token === playToken) {
+            isPlaying = false;
+            setStatus("Sẵn sàng", false);
+            document.getElementById("vanPlay").disabled = false;
+          }
+        };
+        audio.onerror = function () {
+          if (token === playToken) {
+            isPlaying = false;
+            setStatus("Sẵn sàng", false);
+            showMsg("Không phát được audio.", true);
+            document.getElementById("vanPlay").disabled = false;
+          }
+        };
+        setStatus("Đang đọc", true);
+        return audio.play();
+      })
+      .catch(function (err) {
+        if (token !== playToken) return;
+        isPlaying = false;
+        setStatus("Sẵn sàng", false);
+        showMsg((err && err.message) || "Có lỗi xảy ra.", true);
+        document.getElementById("vanPlay").disabled = false;
+      })
+      .then(function () {
+        if (token === playToken && document.getElementById("vanPlay")) {
+          document.getElementById("vanPlay").disabled = false;
+        }
+      });
+  }
+
+  document.getElementById("vanTabs").addEventListener("click", function (e) {
+    var btn = e.target.closest(".van-tab");
+    if (!btn) return;
+    currentCat = btn.getAttribute("data-cat");
+    var tabs = document.querySelectorAll(".van-tab");
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i] === btn) tabs[i].classList.add("is-on");
+      else tabs[i].classList.remove("is-on");
+    }
+    for (var j = 0; j < voicesData.length; j++) {
+      if (voicesData[j].cat === currentCat) {
+        voiceId = voicesData[j].id;
+        rateEl.value = voicesData[j].rate;
+        rateVal.textContent = Number(voicesData[j].rate).toFixed(2);
+        break;
+      }
+    }
+    renderVoices();
+  });
+
+  voicesEl.addEventListener("click", function (e) {
+    var btn = e.target.closest(".van-voice");
+    if (!btn) return;
+    voiceId = btn.getAttribute("data-id");
+    var v = selectedVoice();
+    rateEl.value = v.rate;
+    rateVal.textContent = Number(v.rate).toFixed(2);
+    renderVoices();
+  });
+
+  rateEl.addEventListener("input", function () {
+    rateVal.textContent = Number(rateEl.value).toFixed(2);
+    if (audio) audio.playbackRate = Number(rateEl.value);
+  });
+
+  scriptEl.addEventListener("input", updateCount);
+  document.getElementById("vanClear").onclick = function () {
+    scriptEl.value = "";
+    updateCount();
+  };
+  document.getElementById("vanSample").onclick = function () {
+    scriptEl.value = SAMPLE;
+    updateCount();
+  };
+  document.getElementById("vanStop").onclick = stopAudio;
+  document.getElementById("vanPlay").onclick = play;
+
+  renderVoices();
+  updateCount();
+})();
+</script>

@@ -1,0 +1,313 @@
+.studio-main {
+  padding: 1.5rem 0 3rem;
+  animation: rise-in 500ms ease both;
+}
+
+.studio-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.studio-head h1 {
+  margin: 0.25rem 0 0;
+  font-family: var(--display);
+  font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.studio-lead {
+  margin: 0.65rem 0 0;
+  color: var(--ink-soft);
+  max-width: 36rem;
+  line-height: 1.6;
+}
+
+.studio-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg-elevated));
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.studio-contact strong {
+  color: var(--accent-deep);
+}
+
+.studio-contact span {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+}
+
+.status-pill {
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-loading,
+.status-speaking {
+  border-color: color-mix(in srgb, var(--accent) 65%, var(--line));
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.status-paused {
+  border-color: color-mix(in srgb, #d8a5ff 65%, var(--line));
+  background: color-mix(in srgb, #d8a5ff 22%, transparent);
+}
+
+.notice {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+  color: var(--ink-soft);
+}
+
+.notice.danger {
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+  color: var(--danger);
+}
+
+.studio-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.editor textarea {
+  width: 100%;
+  min-height: 320px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  padding: 1rem;
+  outline: none;
+  font-family: var(--font);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+.editor textarea:focus {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--line));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.editor-actions {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-end;
+}
+
+.side {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  padding: 0.7rem 0.85rem;
+  outline: none;
+  margin-bottom: 0.75rem;
+}
+
+.voice-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.voice-tab {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.voice-tab.is-active {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--line));
+  color: var(--ink);
+}
+
+.field:focus {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--line));
+}
+
+.voice-list {
+  max-height: 320px;
+  overflow: auto;
+  display: grid;
+  gap: 0.4rem;
+  padding-right: 0.15rem;
+}
+
+.voice-item {
+  display: grid;
+  gap: 0.2rem;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  padding: 0.7rem 0.8rem;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+
+.voice-item:hover {
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+.voice-item.is-active {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--line));
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.voice-name {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.voice-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.voice-lang {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.voice-blurb {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.hint {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.slider {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.slider input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent-deep);
+}
+
+.history-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.history-item {
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  padding: 0.7rem 0.8rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-item:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  color: var(--ink);
+}
+
+.empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+@media (min-width: 980px) {
+  .studio-grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.85fr);
+    align-items: start;
+  }
+
+  .editor textarea {
+    min-height: 480px;
+  }
+}
