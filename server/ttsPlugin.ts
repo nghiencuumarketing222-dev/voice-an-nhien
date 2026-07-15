@@ -14,6 +14,13 @@ import {
   toEdgePercent,
   type EdgeVoice,
 } from "../src/data/voices.ts";
+import {
+  checkAdminPassword,
+  getStatsSummary,
+  trackPageview,
+  trackTts,
+  trackVisit,
+} from "./stats.ts";
 
 type TtsBody = {
   text?: string;
@@ -136,6 +143,8 @@ async function handleTts(req: IncomingMessage, res: ServerResponse) {
     const outPath = path.join(dir, `${randomUUID()}.mp3`);
     await writeFile(outPath, audio);
 
+    void trackTts();
+
     res.statusCode = 200;
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Cache-Control", "no-store");
@@ -160,6 +169,38 @@ async function handleTts(req: IncomingMessage, res: ServerResponse) {
   }
 }
 
+async function handleTrack(req: IncomingMessage, res: ServerResponse) {
+  try {
+    const body = (await readJson(req)) as {
+      type?: string;
+      path?: string;
+    };
+    const pathname = typeof body.path === "string" ? body.path : "/";
+    if (body.type === "visit") {
+      await trackVisit();
+    } else {
+      await trackPageview(pathname);
+    }
+    sendJson(res, 200, { ok: true });
+  } catch {
+    sendJson(res, 400, { error: "Không ghi được lượt truy cập." });
+  }
+}
+
+async function handleAdminStats(req: IncomingMessage, res: ServerResponse) {
+  try {
+    const body = (await readJson(req)) as { password?: string };
+    if (!checkAdminPassword(body.password)) {
+      sendJson(res, 401, { error: "Sai mật khẩu admin." });
+      return;
+    }
+    const summary = await getStatsSummary(14);
+    sendJson(res, 200, summary);
+  } catch {
+    sendJson(res, 500, { error: "Không đọc được thống kê." });
+  }
+}
+
 export function ttsMiddleware(): Connect.NextHandleFunction {
   return (req, res, next) => {
     const url = req.url?.split("?")[0] ?? "";
@@ -171,6 +212,16 @@ export function ttsMiddleware(): Connect.NextHandleFunction {
 
     if (req.method === "POST" && url === "/api/tts") {
       void handleTts(req, res);
+      return;
+    }
+
+    if (req.method === "POST" && url === "/api/track") {
+      void handleTrack(req, res);
+      return;
+    }
+
+    if (req.method === "POST" && url === "/api/admin/stats") {
+      void handleAdminStats(req, res);
       return;
     }
 
