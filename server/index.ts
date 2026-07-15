@@ -12,7 +12,8 @@ const app = express();
 app.use(ttsMiddleware());
 app.use(express.static(distDir, { index: false }));
 
-app.get("*", (req, res, next) => {
+// Express 5 / path-to-regexp needs a named splat (bare "*" crashes on start)
+app.get("/{*path}", (req, res, next) => {
   if (req.path.startsWith("/api/")) {
     next();
     return;
