@@ -28,6 +28,58 @@ type StatsResponse = {
   leads?: Lead[];
 };
 
+function escapeXml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function exportLeadsExcel(leads: Lead[]) {
+  const header = ["Thời gian", "Họ tên", "Số điện thoại", "Email"];
+  const rows = leads.map((lead) => [
+    new Date(lead.createdAt).toLocaleString("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh",
+    }),
+    lead.name,
+    lead.phone,
+    lead.email,
+  ]);
+
+  const sheetRows = [header, ...rows]
+    .map(
+      (cols) =>
+        `<Row>${cols
+          .map(
+            (cell) =>
+              `<Cell><Data ss:Type="String">${escapeXml(cell)}</Data></Cell>`,
+          )
+          .join("")}</Row>`,
+    )
+    .join("");
+
+  const xml = `<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <Worksheet ss:Name="Khach">
+  <Table>${sheetRows}</Table>
+ </Worksheet>
+</Workbook>`;
+
+  const blob = new Blob([xml], {
+    type: "application/vnd.ms-excel;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const stamp = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `khach-voice-an-nhien-${stamp}.xls`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function StatsChart({ rows }: { rows: DayRow[] }) {
   const chronological = [...rows].reverse();
   const max = Math.max(
@@ -199,7 +251,17 @@ export default function Admin() {
 
           <StatsChart rows={stats.lastDays} />
 
-          <h2 className="admin__section-title">Danh sách khách (tên · SĐT · email)</h2>
+          <div className="admin__section-head">
+            <h2 className="admin__section-title">Danh sách khách (tên · SĐT · email)</h2>
+            <button
+              type="button"
+              className="admin__export"
+              disabled={!stats.leads?.length}
+              onClick={() => exportLeadsExcel(stats.leads ?? [])}
+            >
+              Xuất Excel
+            </button>
+          </div>
           <div className="admin__table-wrap admin__table-wrap--leads">
             <table>
               <thead>
