@@ -125,6 +125,118 @@
   font-size: 0.9rem;
 }
 
+.admin__chart {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.1rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+}
+
+.admin__chart-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.admin__chart-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.admin__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.admin__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.admin__legend-item::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.admin__legend-item--visits::before {
+  background: var(--accent-deep);
+}
+
+.admin__legend-item--tts::before {
+  background: #2f9e7a;
+}
+
+.admin__legend-item--views::before {
+  background: #d4a017;
+}
+
+.admin__chart-body {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: 0.35rem;
+  align-items: end;
+  min-height: 180px;
+  padding-top: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.admin__bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.admin__bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+  height: 150px;
+}
+
+.admin__bar {
+  flex: 1;
+  max-width: 12px;
+  min-height: 2px;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.25s ease;
+}
+
+.admin__bar--visits {
+  background: var(--accent-deep);
+}
+
+.admin__bar--tts {
+  background: #2f9e7a;
+}
+
+.admin__bar--views {
+  background: #d4a017;
+}
+
+.admin__bar-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  transform: rotate(-45deg);
+  transform-origin: top center;
+  white-space: nowrap;
+  margin-bottom: 0.6rem;
+}
+
 .admin__table-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
@@ -158,5 +270,11 @@
 @media (max-width: 640px) {
   .admin__header {
     flex-direction: column;
+  }
+
+  .admin__chart-body {
+    overflow-x: auto;
+    grid-template-columns: repeat(14, 36px);
+    justify-content: start;
   }
 }

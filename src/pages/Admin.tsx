@@ -19,6 +19,60 @@ type StatsResponse = {
   timezone: string;
 };
 
+function StatsChart({ rows }: { rows: DayRow[] }) {
+  const chronological = [...rows].reverse();
+  const max = Math.max(
+    1,
+    ...chronological.flatMap((r) => [r.visits, r.tts, r.pageviews]),
+  );
+
+  return (
+    <div className="admin__chart">
+      <div className="admin__chart-head">
+        <h2>Sơ đồ 14 ngày</h2>
+        <div className="admin__legend">
+          <span className="admin__legend-item admin__legend-item--visits">
+            Truy cập
+          </span>
+          <span className="admin__legend-item admin__legend-item--tts">
+            Tạo giọng
+          </span>
+          <span className="admin__legend-item admin__legend-item--views">
+            Xem trang
+          </span>
+        </div>
+      </div>
+      <div className="admin__chart-body" role="img" aria-label="Biểu đồ thống kê 14 ngày">
+        {chronological.map((row) => {
+          const label = row.date.slice(5); // MM-DD
+          return (
+            <div className="admin__bar-col" key={row.date} title={`${row.date}`}>
+              <div className="admin__bars">
+                <div
+                  className="admin__bar admin__bar--visits"
+                  style={{ height: `${(row.visits / max) * 100}%` }}
+                  title={`Truy cập: ${row.visits}`}
+                />
+                <div
+                  className="admin__bar admin__bar--tts"
+                  style={{ height: `${(row.tts / max) * 100}%` }}
+                  title={`Tạo giọng: ${row.tts}`}
+                />
+                <div
+                  className="admin__bar admin__bar--views"
+                  style={{ height: `${(row.pageviews / max) * 100}%` }}
+                  title={`Xem trang: ${row.pageviews}`}
+                />
+              </div>
+              <span className="admin__bar-label">{label}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Admin() {
   const [password, setPassword] = useState(() =>
     sessionStorage.getItem("annhien-admin-pass") ?? "",
@@ -129,6 +183,8 @@ export default function Admin() {
             Ngày theo múi giờ {stats.timezone}. Mỗi trình duyệt tính 1 lần truy
             cập / phiên.
           </p>
+
+          <StatsChart rows={stats.lastDays} />
 
           <div className="admin__table-wrap">
             <table>
