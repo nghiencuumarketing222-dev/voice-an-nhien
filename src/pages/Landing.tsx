@@ -28,7 +28,7 @@ const features = [
   },
   {
     title: "Không cần đăng nhập",
-    body: "Mở xưởng đọc là dùng được — không bắt buộc tài khoản Google.",
+    body: "Điền nhanh tên · SĐT · email rồi vào dùng — không cần tài khoản Google.",
   },
   {
     title: "Lịch sử trên máy bạn",
@@ -62,7 +62,7 @@ export default function Landing({ theme, onToggleTheme }: LandingProps) {
               review, tin tức và kể chuyện. Cần học video 1-1? Liên hệ ngay.
             </p>
             <div className="hero-cta">
-              <Link to="/app" className="btn btn-primary">
+              <Link to="/bat-dau" className="btn btn-primary">
                 Bắt đầu miễn phí
                 <span aria-hidden>→</span>
               </Link>

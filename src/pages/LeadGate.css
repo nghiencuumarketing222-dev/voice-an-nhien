@@ -1,0 +1,89 @@
+.lead-gate {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(155, 92, 255, 0.18), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 20%, rgba(122, 63, 240, 0.12), transparent),
+    var(--bg);
+}
+
+.lead-gate__main {
+  width: min(480px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.lead-gate__card {
+  padding: 1.5rem 1.35rem 1.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow);
+}
+
+.lead-gate__eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lead-gate__card h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.45rem, 3.5vw, 1.85rem);
+  line-height: 1.25;
+}
+
+.lead-gate__sub {
+  margin: 0.55rem 0 1.25rem;
+  color: var(--ink-soft);
+}
+
+.lead-gate__form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.lead-gate__form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.lead-gate__form input {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+}
+
+.lead-gate__form input:focus {
+  outline: 2px solid rgba(155, 92, 255, 0.35);
+  border-color: var(--accent);
+}
+
+.lead-gate__form .btn {
+  margin-top: 0.25rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.lead-gate__error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.92rem;
+}
+
+.lead-gate__note {
+  margin: 1rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.lead-gate__note a {
+  color: var(--accent-deep);
+}

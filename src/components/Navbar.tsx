@@ -55,7 +55,7 @@ export default function Navbar({ theme, onToggleTheme, compact }: NavbarProps) {
           >
             {theme === "light" ? "☾" : "☀"}
           </button>
-          <Link to="/app" className="btn btn-primary nav-cta">
+          <Link to="/bat-dau" className="btn btn-primary nav-cta">
             Mở xưởng đọc
           </Link>
         </div>

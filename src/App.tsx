@@ -2,7 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import VisitTracker from "./components/VisitTracker";
 import Admin from "./pages/Admin";
 import Landing from "./pages/Landing";
-import Studio from "./pages/Studio";
+import LeadGate from "./pages/LeadGate";
+import StudioGuard from "./pages/StudioGuard";
 
 type AppProps = {
   theme: "light" | "dark";
@@ -19,8 +20,12 @@ export default function App({ theme, onToggleTheme }: AppProps) {
           element={<Landing theme={theme} onToggleTheme={onToggleTheme} />}
         />
         <Route
+          path="/bat-dau"
+          element={<LeadGate theme={theme} onToggleTheme={onToggleTheme} />}
+        />
+        <Route
           path="/app"
-          element={<Studio theme={theme} onToggleTheme={onToggleTheme} />}
+          element={<StudioGuard theme={theme} onToggleTheme={onToggleTheme} />}
         />
         <Route path="/admin" element={<Admin />} />
       </Routes>

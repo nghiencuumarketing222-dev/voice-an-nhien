@@ -21,6 +21,7 @@ import {
   trackTts,
   trackVisit,
 } from "./stats.ts";
+import { addLead, listLeads } from "./leads.ts";
 
 type TtsBody = {
   text?: string;
@@ -195,9 +196,28 @@ async function handleAdminStats(req: IncomingMessage, res: ServerResponse) {
       return;
     }
     const summary = await getStatsSummary(14);
-    sendJson(res, 200, summary);
+    const leads = await listLeads(100);
+    sendJson(res, 200, { ...summary, leads });
   } catch {
     sendJson(res, 500, { error: "Không đọc được thống kê." });
+  }
+}
+
+async function handleLead(req: IncomingMessage, res: ServerResponse) {
+  try {
+    const body = (await readJson(req)) as {
+      name?: string;
+      phone?: string;
+      email?: string;
+    };
+    const result = await addLead(body);
+    if (!result.ok) {
+      sendJson(res, 400, { error: result.error });
+      return;
+    }
+    sendJson(res, 200, { ok: true, lead: result.lead });
+  } catch {
+    sendJson(res, 500, { error: "Không lưu được thông tin." });
   }
 }
 
@@ -217,6 +237,11 @@ export function ttsMiddleware(): Connect.NextHandleFunction {
 
     if (req.method === "POST" && url === "/api/track") {
       void handleTrack(req, res);
+      return;
+    }
+
+    if (req.method === "POST" && url === "/api/leads") {
+      void handleLead(req, res);
       return;
     }
 

@@ -12,11 +12,20 @@ type DayRow = {
   studio: number;
 };
 
+type Lead = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  createdAt: string;
+};
+
 type StatsResponse = {
   today: DayRow;
   lastDays: DayRow[];
   totals: { visits: number; pageviews: number; tts: number };
   timezone: string;
+  leads?: Lead[];
 };
 
 function StatsChart({ rows }: { rows: DayRow[] }) {
@@ -177,6 +186,10 @@ export default function Admin() {
               <span>14 ngày · truy cập</span>
               <strong>{stats.totals.visits}</strong>
             </article>
+            <article>
+              <span>Khách đã điền form</span>
+              <strong>{stats.leads?.length ?? 0}</strong>
+            </article>
           </div>
 
           <p className="admin__hint">
@@ -186,6 +199,41 @@ export default function Admin() {
 
           <StatsChart rows={stats.lastDays} />
 
+          <h2 className="admin__section-title">Danh sách khách (tên · SĐT · email)</h2>
+          <div className="admin__table-wrap admin__table-wrap--leads">
+            <table>
+              <thead>
+                <tr>
+                  <th>Thời gian</th>
+                  <th>Họ tên</th>
+                  <th>SĐT</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(stats.leads ?? []).length === 0 ? (
+                  <tr>
+                    <td colSpan={4}>Chưa có khách nào điền form.</td>
+                  </tr>
+                ) : (
+                  (stats.leads ?? []).map((lead) => (
+                    <tr key={lead.id}>
+                      <td>
+                        {new Date(lead.createdAt).toLocaleString("vi-VN", {
+                          timeZone: "Asia/Ho_Chi_Minh",
+                        })}
+                      </td>
+                      <td>{lead.name}</td>
+                      <td>{lead.phone}</td>
+                      <td>{lead.email}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <h2 className="admin__section-title">Chi tiết theo ngày</h2>
           <div className="admin__table-wrap">
             <table>
               <thead>
